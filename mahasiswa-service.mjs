@@ -84,13 +84,15 @@ export class MahasiswaService {
       const { id, ...mhs } = body;
 
       if (this.mahasiswas[body.id]) {
-        if (body.nim == '') {
+        const { ...updateMhs } = { ...this.mahasiswas[body.id], ...mhs };
+
+        if (body?.nim == '') {
           this.errorInput.push('Nim tidak boleh kosong');
         }
-        if (body.nama == '') {
+        if (body?.nama == '') {
           this.errorInput.push('Nama tidak boleh kosong');
         }
-        if (body.jurusan == '') {
+        if (body?.jurusan == '') {
           this.errorInput.push('Jurusan tidak boleh kosong');
         }
 
@@ -101,8 +103,8 @@ export class MahasiswaService {
 
           this.errorInput = [];
         } else {
-          this.mahasiswas[id] = mhs;
-          response.write(this.statusSuccessJson(200, 'OK', mhs));
+          this.mahasiswas[id] = updateMhs;
+          response.write(this.statusSuccessJson(200, 'OK', updateMhs));
           response.end();
         }
       } else {
